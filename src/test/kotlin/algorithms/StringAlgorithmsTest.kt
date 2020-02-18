@@ -15,4 +15,18 @@ internal class StringAlgorithmsTest {
         assertFalse(isAnagram("min", "max"))
         assertFalse(isAnagram("wonder", "land"))
     }
+
+    @Test
+    fun hasUniqueCharactersWithDataStructure() {
+        assertTrue("hole".hasUniqueCharacters(true))
+        assertTrue("Waldorf".hasUniqueCharacters(true))
+        assertFalse("wOoW".hasUniqueCharacters(true))
+    }
+
+    @Test
+    fun hasUniqueCharactersNoDataStructure() {
+        assertTrue("hole".hasUniqueCharacters(false))
+        assertTrue("Waldorf".hasUniqueCharacters(false))
+        assertFalse("wOoW".hasUniqueCharacters(false))
+    }
 }

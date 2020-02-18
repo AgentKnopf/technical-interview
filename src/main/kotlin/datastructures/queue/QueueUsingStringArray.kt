@@ -1,36 +1,22 @@
 package datastructures.queue
 
+import datastructures.enlargeArrayIfNeeded
+
 /**
  * Implements a queue using an array.
- * Note: we need the concrete type for the array, as it does not support abstract type T.
  */
-internal class QueueUsingStringArray : IQueue<String> {
+internal class QueueUsingStringArray<T> : IQueue<T> {
     //Index 0 == Head, First index where value is null == Tail
-    var array = arrayOfNulls<String>(4)
+    var array = arrayOfNulls<Any>(2)
     var indexPointer = 0
 
-    override fun enqueue(value: String) {
-        enlargeArrayIfNeeded()
-        array[indexPointer] = value
+    override fun enqueue(value: T) {
+        array = enlargeArrayIfNeeded(array, indexPointer)
+        array[indexPointer] = value as Any
         indexPointer++
     }
 
-    /**
-     * Enlarges the current array if necessary
-     */
-    private fun enlargeArrayIfNeeded() {
-        //Check if the array is full
-        val arraySize = array.size
-        if (arraySize - 1 >= indexPointer) {
-            //Double the array size
-            val oldArray = array
-            array = arrayOfNulls(arraySize * 2)
-            //Copy over from the old to the new array
-            oldArray.forEachIndexed { index, value -> array[index] = value }
-        }
-    }
-
-    override fun dequeue(): String? {
+    override fun dequeue(): T? {
         if (array[0] == null) {
             //The array is empty
             return null
@@ -44,7 +30,7 @@ internal class QueueUsingStringArray : IQueue<String> {
         //Set the index pointer back by one (since we moved all items by 1)
         indexPointer -= 1
         //Return the result
-        return result
+        return if (result != null) result as T else null
     }
 
     override fun size(): Int = indexPointer

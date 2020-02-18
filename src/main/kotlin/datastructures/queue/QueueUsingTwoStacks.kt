@@ -4,6 +4,9 @@ import java.util.*
 
 /**
  * Implements a queue using two stacks. A push stack and a pop stack.
+ *
+ * Worst case lookup: O(n)
+ * Best case lookup: O(1)
  */
 internal class QueueUsingTwoStacks<T> : IQueue<T> {
     private val popStack = Stack<T>()

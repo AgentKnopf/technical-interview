@@ -5,7 +5,9 @@ private const val ARRAY_LENGTH = 20
 /**
  * Custom implementation of a hashmap using a linked list. This Hashtable is not synchronized.
  *
-
+ * Worst case lookup: O(n)
+ * Best case lookup: O(1)
+ *
  * Resources:
  * - https://www.tutorialspoint.com/data_structures_algorithms/hash_data_structure.htm
  */
