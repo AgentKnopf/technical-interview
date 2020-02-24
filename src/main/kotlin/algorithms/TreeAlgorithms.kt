@@ -54,3 +54,31 @@ internal fun insertIntoBstRecursive(root: TreeNode<Int>?, toInsert: Int): TreeNo
         return this
     }
 }
+
+/**
+ * Inverts a binary tree, except for the root node (duh) - no assumption about the tree being a BST can be made, and
+ * frankly it doesn't matter for the task at hand.
+ */
+internal fun invertBinaryTreeIteratively(root: TreeNode<Int>?): TreeNode<Int>? {
+    if (root == null || root.isLeaf()) {
+        //The tree is empty - return our value as the new root
+        return root
+    }
+
+    //Root has at least one left and/or right child and so on
+    var tempNode: TreeNode<Int>? = null
+    with(root) {
+        //Swap left and right
+        tempNode = right
+        right = left
+        left = tempNode
+        //Now traverse down the subtrees
+        left?.let {
+            invertBinaryTreeIteratively(left)
+        }
+        right?.let {
+            invertBinaryTreeIteratively(right)
+        }
+        return this
+    }
+}

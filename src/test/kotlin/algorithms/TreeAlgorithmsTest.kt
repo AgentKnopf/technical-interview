@@ -60,7 +60,46 @@ internal class TreeAlgorithmsTest {
         resultTree = function(tree, 3)
         //5 should be put as a left-hand child node of 7
         assertEquals(3, resultTree!!.left!!.left!!.left!!.value)
+    }
 
+    /**
+     * Inversion of a binary search tree (after which it no longer is a BST).
+     */
+    @Test
+    fun invertBinaryTreeTest() {
+        /*
+          Original:
+                 4
+               /   \
+              2     7
+             / \   / \
+            1   3 6   9
+
+          Target:
+
+                 4
+               /   \
+              7     2
+             / \   / \
+            9   6 3   1
+
+          Basically everything will be mirrored to the other side, exept for the root node.
+         */
+        var tree = TreeNode(4)
+        tree.left = TreeNode(2, TreeNode(1), TreeNode(3))
+        tree.right = TreeNode(7, TreeNode(6), TreeNode(9))
+        var invertedTree = invertBinaryTreeIteratively(tree)!!
+        println(invertedTree.toString())
+        //Assert correctness of the result
+        assertEquals(4, invertedTree.value)
+        assertEquals(7, invertedTree.left!!.value)
+        assertEquals(2, invertedTree.right!!.value)
+        //Check left subtree
+        assertEquals(9, invertedTree.left!!.left!!.value)
+        assertEquals(6, invertedTree.left!!.right!!.value)
+        //Check right subtree
+        assertEquals(1, invertedTree.right!!.right!!.value)
+        assertEquals(3, invertedTree.right!!.left!!.value)
 
     }
 }

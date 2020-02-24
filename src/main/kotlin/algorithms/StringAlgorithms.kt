@@ -56,3 +56,35 @@ private fun hasUniqueCharactersUsingDataStructure(value: String): Boolean {
     value.toCharArray().forEach { character -> set = set.plus(character.toLowerCase()).toMutableSet() }
     return set.size == value.length
 }
+
+fun stringToInteger(value: String): Int {
+    //Check if the first non-whitespace character is a digit or +/- - otherwise we'll return 0
+    val valueTrimmed = value.trimStart()
+    if (valueTrimmed.isEmpty()) {
+        return 0
+    }
+    val isNotDigit = !valueTrimmed[0].isDigit()
+    val isPlus = valueTrimmed[0] == '+'
+    val isMinus = valueTrimmed[0] == '-'
+    if ((valueTrimmed.length == 1 && (isPlus || isMinus)) ||
+        (isNotDigit && !isPlus && !isMinus)
+    ) {
+        return 0
+    }
+
+    //First check if there is a plus symbol
+    var numberAsString = value.replace("[^\\d-.]".toRegex(), "")
+    println(numberAsString)
+    return try {
+        //If the resulting string contains a dot we remove everything after the dot
+        val indexOfDot = numberAsString.indexOf('.', 0)
+        if (indexOfDot >= 0) {
+            //We got a dot, cut it off and everything after it
+            numberAsString = numberAsString.substring(0, indexOfDot)
+        }
+        numberAsString.toInt()
+    } catch (e: NumberFormatException) {
+        //We know its a valid number, so it must be out of range, return [Int.MIN_VALUE]
+        Int.MIN_VALUE
+    }
+}
