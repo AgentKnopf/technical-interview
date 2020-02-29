@@ -45,4 +45,12 @@ internal class StringAlgorithmsTest {
         assertEquals(0, stringToInteger("."))
         assertEquals(0, stringToInteger(""))
     }
+
+    @Test
+    fun isIsomorphicStringTest() {
+        assertFalse(isIsomorphicString("foo", "bar"))
+        assertTrue(isIsomorphicString("egg", "add"))
+        assertTrue(isIsomorphicString("paper", "title"))
+        assertFalse(isIsomorphicString("ab", "aa"))
+    }
 }

@@ -57,7 +57,7 @@ private fun hasUniqueCharactersUsingDataStructure(value: String): Boolean {
     return set.size == value.length
 }
 
-fun stringToInteger(value: String): Int {
+internal fun stringToInteger(value: String): Int {
     //Check if the first non-whitespace character is a digit or +/- - otherwise we'll return 0
     val valueTrimmed = value.trimStart()
     if (valueTrimmed.isEmpty()) {
@@ -87,4 +87,31 @@ fun stringToInteger(value: String): Int {
         //We know its a valid number, so it must be out of range, return [Int.MIN_VALUE]
         Int.MIN_VALUE
     }
+}
+
+/**
+ * Given two strings s and t, determine if they are isomorphic.
+ * Two strings are isomorphic if the characters in s can be replaced to get t.
+ * All occurrences of a character must be replaced with another character while preserving the order of characters.
+ * No two characters may map to the same character but a character may map to itself.
+ */
+internal fun isIsomorphicString(left: String, right: String): Boolean {
+    val mapLeftToRight = mutableMapOf<Char, Char>()
+    left.forEachIndexed { index, value ->
+        if (mapLeftToRight.containsKey(value)) {
+            //We already have a mapping, check if it's correct
+            if (right[index] != mapLeftToRight[value]) {
+                return false
+            }
+        } else {
+            val characterRight = right[index]
+            //Make sure the character in the right string hasn't been mapped to any other character yet
+            if (mapLeftToRight.values.contains(characterRight)) {
+                return false
+            }
+            //Add a mapping
+            mapLeftToRight[value] = characterRight
+        }
+    }
+    return true
 }

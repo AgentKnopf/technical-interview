@@ -12,7 +12,7 @@ package algorithms
  *
  * Please note that both secret number and friend's guess may contain duplicate digits.
  */
-fun bullsAndCowsGetHint(secret: String, guess: String): String {
+internal fun bullsAndCowsGetHint(secret: String, guess: String): String {
     //Each non-bull is saved here with: value to count of occurrences
     val potentialCows = mutableMapOf<Char, Int>()
     var bullCount = 0
