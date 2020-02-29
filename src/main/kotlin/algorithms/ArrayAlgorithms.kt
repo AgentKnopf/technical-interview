@@ -2,6 +2,7 @@ package algorithms
 
 /**
  * Sliding window problem: Two buckets, each can only hold one type of fruit, what's the most fruits we can collect.
+ * https://levelup.gitconnected.com/an-introduction-to-sliding-window-algorithms-5533c4fe1cc7
  */
 internal fun totalFruit(tree: Array<Int>): Int {
     //Find the longest contiguous sequence, note that each basket can only contain one type of fruit
