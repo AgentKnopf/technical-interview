@@ -53,4 +53,21 @@ internal class StringAlgorithmsTest {
         assertTrue(isIsomorphicString("paper", "title"))
         assertFalse(isIsomorphicString("ab", "aa"))
     }
+
+    @Test
+    fun longestSubStringWithoutRepeatingCharactersTest() {
+        assertEquals(0, longestSubStringWithoutRepeatingCharacters(""))
+        assertEquals(1, longestSubStringWithoutRepeatingCharacters("b"))
+        assertEquals(1, longestSubStringWithoutRepeatingCharacters("bbbbb"))
+        assertEquals(3, longestSubStringWithoutRepeatingCharacters("abcabcbb"))
+        assertEquals(3, longestSubStringWithoutRepeatingCharacters("bar"))
+        assertEquals(4, longestSubStringWithoutRepeatingCharacters("work"))
+        assertEquals(15, longestSubStringWithoutRepeatingCharacters("dermatoglyphics"))
+        assertEquals(3, longestSubStringWithoutRepeatingCharacters("pwwkew"))
+        assertEquals(3, longestSubStringWithoutRepeatingCharacters("dvdf"))
+        assertEquals(
+            55,
+            longestSubStringWithoutRepeatingCharacters("hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+        )
+    }
 }

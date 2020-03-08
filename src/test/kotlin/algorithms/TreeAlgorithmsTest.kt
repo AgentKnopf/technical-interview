@@ -1,7 +1,7 @@
 package algorithms
 
 import datastructures.TreeNode
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Test
 
 internal class TreeAlgorithmsTest {
@@ -100,6 +100,98 @@ internal class TreeAlgorithmsTest {
         //Check right subtree
         assertEquals(1, invertedTree.right!!.right!!.value)
         assertEquals(3, invertedTree.right!!.left!!.value)
+    }
 
+    @Test
+    fun serializeBinaryTreeTest() {
+        /*
+          Tree to serialize:
+                 4
+               /   \
+              2     7
+             / \   / \
+            1   3 6   9
+         */
+        var tree = TreeNode(4)
+        tree.left = TreeNode(2, TreeNode(1), TreeNode(3))
+        tree.right = TreeNode(7, TreeNode(6), TreeNode(9))
+        val builder = StringBuilder()
+        serializeBinaryTree(tree, builder)
+        assertEquals("4;2;1;null;null;3;null;null;7;6;null;null;9;null;null;", builder.toString())
+        println(builder.toString())
+    }
+
+    @Test
+    fun isValidBSTRecursiveAndStackTest() {
+        isValidBSTTest(::isValidBSTRecursiveAndStack)
+    }
+
+    @Test
+    fun isValidBSTRecursiveTest() {
+        isValidBSTTest(::isValidBSTRecursive)
+    }
+
+    /**
+     * Helper method to test if a given tree is a valid BST.
+     */
+    private fun isValidBSTTest(functionToTest: (TreeNode<Int>?) -> Boolean) {
+        /*
+          Tree to check:
+                 4
+               /   \
+              2     7
+             / \   / \
+            1   3 6   9
+         */
+        var tree = TreeNode(4)
+        tree.left = TreeNode(2, TreeNode(1), TreeNode(3))
+        tree.right = TreeNode(7, TreeNode(6), TreeNode(9))
+        //The above is a valid BST
+        assertTrue(functionToTest(tree))
+
+        /*
+          Tree to check:
+                 4
+               /   \
+              2     7
+             / \   / \
+            3   1 6   9
+         */
+        tree = TreeNode(4)
+        tree.left = TreeNode(2, TreeNode(3), TreeNode(1))
+        tree.right = TreeNode(7, TreeNode(6), TreeNode(9))
+        //The above is not a valid BST
+        assertFalse(functionToTest(tree))
+
+        /*
+          Tree to check:
+                 4
+               /   \
+              2     3
+         */
+        tree = TreeNode(4)
+        tree.left = TreeNode(2)
+        tree.right = TreeNode(3)
+        //The above is not a valid BST
+        assertFalse(functionToTest(tree))
+
+        /*
+          Tree to check:
+                 1
+               /
+              1
+         */
+        tree = TreeNode(1)
+        tree.left = TreeNode(1)
+        //The above is not a valid BST
+        assertFalse(functionToTest(tree))
+
+        //Edge case because a node in the right sub tree is smaller than the root node:
+        tree = TreeNode(5)
+        tree.left = TreeNode(1)
+        tree.right = TreeNode(6, TreeNode(4), TreeNode(7))
+
+        //Edge case: Tree is null
+        assertTrue(functionToTest(null))
     }
 }

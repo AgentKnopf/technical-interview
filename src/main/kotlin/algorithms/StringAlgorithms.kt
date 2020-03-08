@@ -115,3 +115,26 @@ internal fun isIsomorphicString(left: String, right: String): Boolean {
     }
     return true
 }
+
+/**
+ * Given a string, find the length of the longest substring without repeating characters.
+ *
+ * This falls into the "sliding window" category. We have two pointers and we'll keep advancing the right-hand
+ * pointer until we hit a duplicate. Once we do, we advance the left-hand pointer until we no longer have duplicates, then
+ * we continue with the right pointer.
+ */
+internal fun longestSubStringWithoutRepeatingCharacters(input: String): Int {
+    val lastIndex = mutableMapOf<Char, Int>()
+    var max = 0
+    var startIndex = -1
+    for ((index, character) in input.withIndex()) {
+        val lastIndex = lastIndex.put(character, index)
+        if (lastIndex != null && lastIndex > startIndex) {
+            startIndex = lastIndex
+        }
+        if (index - startIndex > max) {
+            max = index - startIndex
+        }
+    }
+    return max
+}
