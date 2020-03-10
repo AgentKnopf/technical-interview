@@ -104,6 +104,28 @@ internal class TreeAlgorithmsTest {
 
     @Test
     fun serializeBinaryTreeTest() {
+        //Empty tree
+        assertEquals("", serializeBinaryTree(null))
+
+        /*
+          Tree to serialize:
+                 4
+               /
+              2
+         */
+        var tree = TreeNode(4)
+        assertEquals("4;null;null;", serializeBinaryTree(tree))
+
+        /*
+          Tree to serialize:
+                 4
+               /
+              2
+         */
+        tree = TreeNode(4)
+        tree.left = TreeNode(2, null, null)
+        assertEquals("4;2;null;null;null;", serializeBinaryTree(tree))
+
         /*
           Tree to serialize:
                  4
@@ -112,13 +134,45 @@ internal class TreeAlgorithmsTest {
              / \   / \
             1   3 6   9
          */
+        tree = TreeNode(4)
+        tree.left = TreeNode(2, TreeNode(1), TreeNode(3))
+        tree.right = TreeNode(7, TreeNode(6), TreeNode(9))
+        assertEquals("4;2;1;null;null;3;null;null;7;6;null;null;9;null;null;", serializeBinaryTree(tree))
+
+        /*
+          Tree to serialize:
+                 1
+               /   \
+              2     5
+             / \
+            3   4
+         */
+        tree = TreeNode(1)
+        tree.left = TreeNode(2, TreeNode(3), TreeNode(4))
+        tree.right = TreeNode(5)
+        assertEquals("1;2;3;null;null;4;null;null;5;null;null;", serializeBinaryTree(tree))
+    }
+
+    @Test
+    fun deserializeBinaryTreeTest() {
+        //Empty tree
+        assertNull(deserializeBinaryTree(""))
+
+        //The tree we expect from the deserialization
         var tree = TreeNode(4)
         tree.left = TreeNode(2, TreeNode(1), TreeNode(3))
         tree.right = TreeNode(7, TreeNode(6), TreeNode(9))
-        val builder = StringBuilder()
-        serializeBinaryTree(tree, builder)
-        assertEquals("4;2;1;null;null;3;null;null;7;6;null;null;9;null;null;", builder.toString())
-        println(builder.toString())
+        assertEquals(tree, deserializeBinaryTree("4;2;1;null;null;3;null;null;7;6;null;null;9;null;null;"))
+
+        //The tree we expect from the deserialization
+        assertEquals(TreeNode(4), deserializeBinaryTree("4;null;null;"))
+
+        //The tree we expect from the deserialization
+        tree = TreeNode(1)
+        tree.left = TreeNode(2, TreeNode(3), TreeNode(4))
+        tree.right = TreeNode(5)
+        assertEquals(tree, deserializeBinaryTree("1;2;3;null;null;4;null;null;5;null;null;"))
+
     }
 
     @Test

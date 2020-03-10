@@ -14,7 +14,7 @@ internal fun insertIntoBstIterative(root: TreeNode<Int>?, toInsert: Int): TreeNo
     //The tree is not empty, there is at least a root node
     var currentNode = root
     while (currentNode != null) {
-        if (currentNode.value < toInsert) {
+        if (currentNode.value!! < toInsert) {
             //The current node has a smaller value than our insert value > continue to the right
             if (currentNode.isRightNull()) {
                 //We're done, add our new value and return the result
@@ -47,7 +47,7 @@ internal fun insertIntoBstRecursive(root: TreeNode<Int>?, toInsert: Int): TreeNo
     }
 
     with(root) {
-        if (toInsert > value) {
+        if (toInsert > value!!) {
             right = insertIntoBstRecursive(right, toInsert)
         } else {
             left = insertIntoBstRecursive(left, toInsert)
@@ -87,37 +87,62 @@ internal fun invertBinaryTreeIteratively(root: TreeNode<Int>?): TreeNode<Int>? {
 /**
  * Serializes the given binary tree to string. No assumptions about unique elements or sorting can be made.
  */
-//TODO
-internal fun serializeBinaryTree(root: TreeNode<Int>?, result: StringBuilder) {
-    if (root == null) {
-        result.append("null;")
-        return
+internal fun serializeBinaryTree(root: TreeNode<Int>?): String {
+    fun recursionHelper(root: TreeNode<Int>?, result: StringBuilder) {
+        if (root == null) {
+            result.append("null;")
+            return
+        }
+        //Print root node
+        result.append("${root.value};")
+        //Recurse on left subtree
+        recursionHelper(root.left, result)
+        //Recurse on right subtree
+        recursionHelper(root.right, result)
     }
-    //Print root node
-    result.append("${root.value};")
-    //Recurse on left subtree
-    serializeBinaryTree(root.left, result)
-    //Recurse on right subtree
-    serializeBinaryTree(root.right, result)
-    throw NotImplementedError()
+
+    if (root == null) {
+        return ""
+    }
+    val stringBuilder = StringBuilder()
+    recursionHelper(root, stringBuilder)
+    return stringBuilder.toString()
 }
 
 /**
  * Deserializes a binary tree that has been serialized prior using [serializeBinaryTree].
+ * @param result must have the format value;value;value... where "null" represents a null-node and value represents an integer.
+ * @return the deserialized tree.
  */
-//TODO
-internal fun deserializeBinaryTree(root: TreeNode<Int>?, result: StringBuilder) {
-    if (root == null) {
-        result.append("null;")
-        return
+internal fun deserializeBinaryTree(treeAsString: String): TreeNode<Int>? {
+
+    fun parseNodeValue(value: String): Int? = when (value) {
+        "null" -> null
+        else -> value.toInt()
     }
-    //Print root node
-    result.append("${root.value};")
-    //Recurse on left subtree
-    serializeBinaryTree(root.left, result)
-    //Recurse on right subtree
-    serializeBinaryTree(root.right, result)
-    throw NotImplementedError()
+
+    fun recursionHelper(node: TreeNode<Int>, nodeValues: MutableList<String>): TreeNode<Int>? {
+        if (nodeValues.isEmpty()) {
+            return node
+        }
+        val nodeValue = parseNodeValue(nodeValues.removeAt(0))
+        if (nodeValue != null) {
+            node.value = nodeValue
+        } else {
+            //We reached a leaf node, return null
+            return null
+        }
+        node.left = recursionHelper(TreeNode(), nodeValues)
+        node.right = recursionHelper(TreeNode(), nodeValues)
+        return node
+    }
+
+    val nodeList = treeAsString.split(";").toMutableList()
+    if (nodeList.isEmpty() || nodeList.size == 1) {
+        return null
+    }
+    //Read the root and pass it along
+    return recursionHelper(TreeNode(), nodeList)
 }
 
 /**
@@ -130,47 +155,36 @@ internal fun isValidBSTRecursiveAndStack(node: TreeNode<Int>?): Boolean {
     /**
      * Inline function to do the recursion
      */
-    fun isValidBinarySearchTree(node: TreeNode<Int>?, stack: Deque<Int>) {
+    fun recursionHelper(node: TreeNode<Int>?, stack: Deque<Int>): Boolean {
         //We're going with in order traversal here, as in case of a BST it would mean as we pop elements from the stack,
         //each element we pop (if pushed in lnr order) is greater than the next popped element
-
         //We reached the end, stop here
         if (node == null) {
-            return
+            return true
         }
 
         //First we go left
         if (node.left != null) {
-            isValidBinarySearchTree(node.left, stack)
+            if (!recursionHelper(node.left, stack)) return false
         }
-        //Now we read our node
-        stack.push(node.value)
+        //Now we read our node if it's valid
+        if (stack.isEmpty() || (stack.peek() != null && stack.peek() < node.value!!)) {
+            stack.push(node.value)
+        } else {
+            return false
+        }
 
         //Now we go right
         if (node.right != null) {
-            isValidBinarySearchTree(node.right, stack)
+            if (!recursionHelper(node.right, stack)) return false
         }
+        return true
     }
 
     if (node == null) {
         return true
     }
-    if (node.isLeaf()) {
-        return true
-    }
-    val stack = ArrayDeque<Int>()
-    isValidBinarySearchTree(node, stack)
-    //Process the stack
-    var lastValue = stack.pop()
-    while (stack.peek() != null) {
-        if (lastValue <= stack.peek()) {
-            //This is our deal-breaker
-            return false
-        } else {
-            lastValue = stack.pop()
-        }
-    }
-    return true
+    return recursionHelper(node, ArrayDeque<Int>())
 }
 
 /**
@@ -187,8 +201,8 @@ internal fun isValidBSTRecursive(node: TreeNode<Int>?): Boolean {
         }
         val nodeValue = node.value
         //Validate node against limits
-        if (lowerLimit != null && nodeValue <= lowerLimit) return false
-        if (upperLimit != null && nodeValue >= upperLimit) return false
+        if (lowerLimit != null && nodeValue!! <= lowerLimit) return false
+        if (upperLimit != null && nodeValue!! >= upperLimit) return false
 
         //Check conditions for left subtree
         if (!recursionHelper(node.left, lowerLimit, nodeValue)) return false

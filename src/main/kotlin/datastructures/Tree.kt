@@ -4,7 +4,7 @@ package datastructures
  * Represents a node in a tree which has a value and one node each - left and right.
  * Can be used to represent a BTS.
  */
-internal data class TreeNode<T>(val value: T, var left: TreeNode<T>? = null, var right: TreeNode<T>? = null) {
+internal data class TreeNode<T>(var value: T? = null, var left: TreeNode<T>? = null, var right: TreeNode<T>? = null) {
     /**
      * @return true if the right node is null
      */
