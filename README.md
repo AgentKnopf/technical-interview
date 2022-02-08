@@ -15,6 +15,7 @@ Explanations on algorithms, data structures and problem solving
 - https://www.youtube.com/channel/UCmJz2DV1a3yfgrR7GqRtUUA
 - https://www.youtube.com/channel/UCxX9wt5FWQUAAz4UrysqK9A
 - https://www.youtube.com/channel/UC8butISFwT-Wl7EV0hUK0BQ
+- https://www.geeksforgeeks.org/
 
 ## Challenges/Tasks
 - https://leetcode.com/problemset/all/
