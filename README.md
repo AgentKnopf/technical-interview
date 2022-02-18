@@ -17,5 +17,8 @@ Explanations on algorithms, data structures and problem solving
 - https://www.youtube.com/channel/UC8butISFwT-Wl7EV0hUK0BQ
 - https://www.geeksforgeeks.org/
 
+## Datastructures
+- Arraylist vs LinkedList: https://www.baeldung.com/java-arraylist-linkedlist
+
 ## Challenges/Tasks
 - https://leetcode.com/problemset/all/
